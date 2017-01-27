@@ -1,0 +1,15 @@
+
+
+menu "JASONTEK F103RB BOARD CONFIGURATION"
+
+config JASONTEK_BASIC_DEMOS
+prompt "build jasontek/nucleo_f103rb basic demo"
+bool
+default n
+
+if JASONTEK_BASIC_DEMOS
+	source "samples/jasontek_demos/src/Kconfig.demos"
+endif # JASONTEK_BASIC_DEMOS
+
+endmenu
+

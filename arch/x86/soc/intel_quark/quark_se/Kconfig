@@ -1,0 +1,104 @@
+# Kconfig - Quark SE configuration options
+
+#
+# Copyright (c) 2016 Intel Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+if X86 && SOC_QUARK_SE_C1000
+
+config EOI_FORWARDING_BUG
+	bool
+	default y
+	help
+	Quark SE LOAPIC has issues with forwarding EOI to the IOAPIC for level
+	triggered interrupts, this is a SW workaround.
+
+config SS_RESET_VECTOR
+	hex "Sensor Subsystem Reset Vector"
+	default 0x40000000
+	help
+	Sensor subsystem reset vector. This value is needed to init the ARC
+	system on the SoC.
+
+config ARC_INIT
+	bool "Quark SE ARC Kickoff"
+	default n
+	help
+	Allows x86 processor to kickoff the ARC slave processor.
+
+config SYS_LOG_ARC_INIT_LEVEL
+	int
+	prompt "Quark SE Sensor Subsystem log level"
+	default 0
+	help
+	Sets log level for the boot initialization and boot process of the sensor
+	sub-system.
+
+	Levels are:
+
+	- 0 OFF, do not write
+
+	- 1 ERROR, only write SYS_LOG_ERR
+
+	- 2 WARNING, write SYS_LOG_WRN in adition to previous level
+
+	- 3 INFO, write SYS_LOG_INF in adition to previous levels
+
+	- 4 DEBUG, write SYS_LOG_DBG in adition to previous levels
+
+config ARC_GDB_ENABLE
+	bool "Allows the usage of GDB with the ARC processor."
+	depends on ARC_INIT
+	default n
+	help
+	This option will stop the master processor from boot-strapping
+	the ARC slave processor. This will allow GDB to halt and
+	engage the ARC processor to proceed step by step execution.
+
+if IPM
+config QUARK_SE_IPM_IRQ_PRI
+	int "IPM interrupt priority"
+	default 2
+	help
+	Priority level for interrupts coming in from the inter-processor
+	mailboxes.
+
+if IPM_CONSOLE_RECEIVER
+config QUARK_SE_IPM_CONSOLE_RING_BUF_SIZE32
+	int "IPM Console Ring Buffer Size"
+	default 256
+	help
+	Size of the buffer for the console reciever, for incoming
+	console messages from the ARC side. Must be a power of 2.
+endif
+endif
+
+config BSP_SHARED_RAM_ADDR
+	hex "Address of the shared RAM with the QMSI Bootloader"
+	depends on SYS_POWER_DEEP_SLEEP
+	default 0xA8013FFC
+	help
+	Address of the memory shared between the BSP and the Bootloader in order
+	to store restore information.
+
+config BSP_SHARED_RAM_SIZE
+	hex "Size of the shared RAM with the QMSI Bootloader"
+	depends on SYS_POWER_DEEP_SLEEP
+	default 0x4
+	help
+	Size of the memory shared between the BSP and the Bootloader in order
+	to store restore information.
+
+endif #SOC_QUARK_SE_C1000_X86

@@ -1,0 +1,36 @@
+
+
+choice
+prompt "DEMO Select"
+default JASONTEK_BTNDEMO
+
+config JASONTEK_BTNDEMO
+	bool "USER button pressed demo"	
+	select GPIO
+	
+config JASONTEK_PWMDEMO
+	bool "PWM--fadeLED demo"	
+	select PWM
+	select PRINTK
+	select STDOUT_CONSOLE	
+	
+config JASONTEK_SHELLDEMO
+	bool "shell demo"
+	select CONSOLE_HANDLER
+	select CONSOLE_HANDLER_SHELL
+	select ENABLE_SHELL
+	select PRINTK
+	select KERNEL_SHELL
+	select MINIMAL_LIBC_EXTENDED
+	
+config JASONTEK_SYNCDEMO
+	bool "synchronization demo"
+	select STDOUT_CONSOLE
+	
+config JASONTEK_PHILDEMO
+	bool "Dining Philosophers problem demo"
+	select ASSERT
+	select INIT_STACKS
+	
+	
+endchoice

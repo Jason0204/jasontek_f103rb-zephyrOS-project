@@ -1,0 +1,114 @@
+#
+# Copyright (c) 2016 Intel Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+menu "File System"
+
+config FILE_SYSTEM
+	bool "File system support"
+	default n
+	help
+	Enables support for file system.
+
+if FILE_SYSTEM
+
+config FILE_SYSTEM_SHELL
+	bool "Enable file system shell"
+	depends on ENABLE_SHELL
+	help
+	This shell provides basic browsing of the contents of the
+	file system.
+
+config FILE_SYSTEM_FAT
+	bool "FAT file system support"
+	default y
+	help
+	Enables FAT file system support.
+
+choice
+	prompt "Storage backend selection"
+
+config DISK_ACCESS_RAM
+	bool "RAM Disk"
+	help
+	RAM buffer used to emulate storage disk.
+	This option can used to test the file
+	system.
+
+config DISK_ACCESS_FLASH
+	bool "Flash"
+	help
+	Flash device is used for the file system.
+
+endchoice
+
+config FS_VOLUME_SIZE
+	hex
+	default 0x18000 if DISK_ACCESS_RAM
+	default 0x200000 if FS_FAT_FLASH_DISK_W25QXXDV
+	help
+	This is the file system volume size in bytes.
+
+config FS_BLOCK_SIZE
+	hex
+	default 0x1000 if DISK_ACCESS_RAM
+	default 0x1000 if FS_FAT_FLASH_DISK_W25QXXDV
+	help
+	This is typically the minimum block size that
+	is erased at one time in flash storage.
+
+if DISK_ACCESS_FLASH
+
+config FS_FAT_FLASH_DISK_W25QXXDV
+	bool "W25QXXDV flash component"
+	help
+	Enables to use the W25QXXDV as the storage media
+	for the file system.
+
+if FS_FAT_FLASH_DISK_W25QXXDV
+
+config FS_FLASH_DEV_NAME
+	string
+	prompt "File system flash storage device name"
+	depends on SPI_FLASH_W25QXXDV
+	default SPI_FLASH_W25QXXDV_DRV_NAME
+
+config FS_FLASH_START
+	hex
+	default 0x0
+	help
+	This is start address of the flash for the file
+	system.
+
+config FS_FLASH_MAX_RW_SIZE
+	int
+	default SPI_FLASH_W25QXXDV_MAX_DATA_LEN
+	help
+	This is the maximum number of bytes that the
+	flash_write API can do per invocation.
+	API.
+
+config FS_FLASH_ERASE_ALIGNMENT
+	hex
+	default 0x1000
+	help
+	This is the start address alignment required by
+	the flash component.
+
+endif # FS_FAT_FLASH_DISK_W25QXXDV
+endif # DISK_ACCESS_FLASH
+endif # FILE_SYSTEM
+
+endmenu

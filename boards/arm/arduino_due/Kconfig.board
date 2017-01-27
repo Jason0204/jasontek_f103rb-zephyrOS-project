@@ -1,0 +1,4 @@
+
+config BOARD_ARDUINO_DUE
+	bool "Arduino Due Board"
+	depends on SOC_ATMEL_SAM3X8E

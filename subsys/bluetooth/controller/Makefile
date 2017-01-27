@@ -1,0 +1,16 @@
+ccflags-$(CONFIG_BLUETOOTH_CONTROLLER) += -I$(srctree)/subsys/bluetooth/controller/util
+ccflags-$(CONFIG_BLUETOOTH_CONTROLLER) += -I$(srctree)/subsys/bluetooth/controller/hal
+ccflags-$(CONFIG_BLUETOOTH_CONTROLLER) += -I$(srctree)/subsys/bluetooth/controller/ll
+obj-$(CONFIG_BLUETOOTH_CONTROLLER) += util/mem.o
+obj-$(CONFIG_BLUETOOTH_CONTROLLER) += util/memq.o
+obj-$(CONFIG_BLUETOOTH_CONTROLLER) += util/work.o
+obj-$(CONFIG_BLUETOOTH_CONTROLLER) += util/util.o
+obj-$(CONFIG_BLUETOOTH_CONTROLLER) += hal/rtc.o
+obj-$(CONFIG_BLUETOOTH_CONTROLLER) += hal/rand.o
+obj-$(CONFIG_BLUETOOTH_CONTROLLER) += hal/ecb.o
+obj-$(CONFIG_BLUETOOTH_CONTROLLER) += hal/radio.o
+obj-$(CONFIG_BLUETOOTH_CONTROLLER) += ll/ticker.o
+obj-$(CONFIG_BLUETOOTH_CONTROLLER) += ll/ctrl.o
+obj-$(CONFIG_BLUETOOTH_CONTROLLER) += ll/ll.o
+obj-$(CONFIG_BLUETOOTH_CONTROLLER) += hci/hci_driver.o
+obj-$(CONFIG_BLUETOOTH_CONTROLLER) += hci/hci.o

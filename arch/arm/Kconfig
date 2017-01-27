@@ -1,0 +1,45 @@
+# Kconfig - ARM architecture configuration options
+
+#
+# Copyright (c) 2014-2015 Wind River Systems, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+choice
+	prompt "ARM SoC Selection"
+	default SOC_SERIES_KINETIS_K6X
+	depends on ARM
+
+	source "arch/arm/soc/*/Kconfig.soc"
+endchoice
+
+menu "ARM Options"
+	depends on ARM
+
+config ARCH
+	default "arm"
+
+config ARCH_DEFCONFIG
+	string
+	default "arch/arm/defconfig"
+
+
+source "arch/arm/core/Kconfig"
+
+menu "Board Configuration"
+
+source "arch/arm/soc/*/Kconfig"
+
+endmenu
+endmenu

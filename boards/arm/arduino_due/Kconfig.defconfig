@@ -1,0 +1,14 @@
+
+if BOARD_ARDUINO_DUE
+
+config BOARD
+	default arduino_due
+
+if I2C
+
+config I2C_ATMEL_SAM3
+	default y
+
+endif # I2C
+
+endif # BOARD_ARDUINO_DUE

@@ -1,0 +1,105 @@
+# Kconfig - sensor configuration options
+
+#
+# Copyright (c) 2016 Intel Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+menuconfig SENSOR
+	bool
+	prompt "Sensor Drivers"
+	default n
+	help
+	  Include sensor drivers in system config
+
+config SYS_LOG_SENSOR_LEVEL
+	int "Sensor Log level"
+	depends on SYS_LOG && SENSOR
+	default 0
+	range 0 4
+	help
+	Sets log level for sensor driver.
+	Levels are:
+
+	- 0 OFF: do not write
+
+	- 1 ERROR: only write SYS_LOG_ERR
+
+	- 2 WARNING: write SYS_LOG_WRN in addition to previous level
+
+	- 3 INFO: write SYS_LOG_INF in addition to previous levels
+
+	- 4 DEBUG: write SYS_LOG_DBG in addition to previous levels
+
+config SENSOR_INIT_PRIORITY
+	int
+	prompt "Sensor init priority"
+	depends on SENSOR
+	default 90
+	help
+	 Sensor initialization priority.
+
+source "drivers/sensor/ak8975/Kconfig"
+
+source "drivers/sensor/bma280/Kconfig"
+
+source "drivers/sensor/bmc150_magn/Kconfig"
+
+source "drivers/sensor/bme280/Kconfig"
+
+source "drivers/sensor/bmg160/Kconfig"
+
+source "drivers/sensor/bmi160/Kconfig"
+
+source "drivers/sensor/dht/Kconfig"
+
+source "drivers/sensor/fxos8700/Kconfig"
+
+source "drivers/sensor/hdc1008/Kconfig"
+
+source "drivers/sensor/hmc5883l/Kconfig"
+
+source "drivers/sensor/hp206c/Kconfig"
+
+source "drivers/sensor/hts221/Kconfig"
+
+source "drivers/sensor/isl29035/Kconfig"
+
+source "drivers/sensor/lis3dh/Kconfig"
+
+source "drivers/sensor/lis3mdl/Kconfig"
+
+source "drivers/sensor/lps25hb/Kconfig"
+
+source "drivers/sensor/lsm6ds0/Kconfig"
+
+source "drivers/sensor/lsm9ds0_gyro/Kconfig"
+
+source "drivers/sensor/lsm9ds0_mfd/Kconfig"
+
+source "drivers/sensor/max44009/Kconfig"
+
+source "drivers/sensor/mcp9808/Kconfig"
+
+source "drivers/sensor/mpu6050/Kconfig"
+
+source "drivers/sensor/sht3xd/Kconfig"
+
+source "drivers/sensor/sx9500/Kconfig"
+
+source "drivers/sensor/th02/Kconfig"
+
+source "drivers/sensor/tmp007/Kconfig"
+
+source "drivers/sensor/tmp112/Kconfig"

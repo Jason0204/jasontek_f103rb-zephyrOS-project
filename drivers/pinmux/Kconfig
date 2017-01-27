@@ -1,0 +1,65 @@
+# Kconfig - Pinmux configuration options
+
+#
+# Copyright (c) 2015 Intel Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+#
+# PinMux options
+#
+menuconfig PINMUX
+	bool "Enable board pinmux driver"
+	default n
+
+if PINMUX
+
+source "drivers/pinmux/dev/Kconfig"
+
+config PINMUX_NAME
+	string "Pinmux driver name"
+	depends on PINMUX
+	default "PINMUX"
+	help
+	The name of the pinmux driver.
+
+config PINMUX_INIT_PRIORITY
+	int
+	prompt "Init priority"
+	default 45
+	depends on PINMUX
+	help
+	  Pinmux driver initialization priority.
+	  Pinmux driver almost certainly should be initialized before the
+	  rest of hardware devices (which may need specific pins already
+	  configured for them), and usually after generic GPIO drivers.
+	  Thus, its priority should be between KERNEL_INIT_PRIORITY_DEFAULT
+	  and KERNEL_INIT_PRIORITY_DEVICE. There are exceptions to this
+	  rule for particular boards. Don't change this value unless you
+	  know what you are doing.
+
+config PINMUX_K64
+	bool "Freescale K64-based Pin multiplexer driver"
+	depends on SOC_MK64F12
+	default n
+	help
+	Enable driver for Freescale K64-based Pin multiplexer.
+
+source "drivers/pinmux/Kconfig.ksdk"
+
+source "drivers/pinmux/Kconfig.stm32"
+
+source "drivers/pinmux/Kconfig.beetle"
+
+endif # PINMUX

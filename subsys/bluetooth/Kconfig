@@ -1,0 +1,61 @@
+# Kconfig - Bluetooth configuration options
+#
+# Copyright (c) 2016 Intel Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+menuconfig BLUETOOTH
+	bool "Bluetooth support"
+	select NET_BUF
+	help
+	  This option enables Bluetooth support.
+
+if BLUETOOTH
+
+choice
+	prompt "Bluetooth Stack Selection"
+	default BLUETOOTH_HCI
+	help
+	  Select the Bluetooth stack to compile.
+
+config BLUETOOTH_HCI
+	bool "HCI-based"
+	help
+	  HCI-based stack with optional host & controller parts and an
+	  HCI driver in between.
+
+config BLUETOOTH_CUSTOM
+	bool "Custom"
+	help
+	  Select a custom, non-HCI based stack. If you're not sure what
+	  this is, you probably want the HCI-based stack instead.
+
+endchoice
+
+if BLUETOOTH_HCI
+
+config BLUETOOTH_CONTROLLER
+	bool "Bluetooth Controller"
+	select BLUETOOTH_HOST_BUFFERS
+	help
+	  Enables support for SoC native controller implementation.
+
+source "subsys/bluetooth/host/Kconfig"
+
+if BLUETOOTH_CONTROLLER
+source "subsys/bluetooth/controller/Kconfig"
+endif
+
+endif # BLUETOOTH_HCI
+endif # BLUETOOTH

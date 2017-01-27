@@ -1,0 +1,181 @@
+# Kconfig - SPI driver configuration options
+
+#
+# Copyright (c) 2015-2016 Intel Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+#
+# SPI Drivers
+#
+menuconfig SPI
+	bool
+	prompt "SPI hardware bus support"
+	default n
+	help
+	  Enable support for the SPI hardware bus.
+
+config SPI_QMSI
+	bool "QMSI driver for SPI controller"
+	depends on SPI && QMSI
+	default n
+	help
+	  SPI driver implementation using QMSI library. QMSI is the
+	  Quark Microcontroller Software Interface, providing a common
+	  interface to the Quark family of microcontrollers.
+
+config SPI_QMSI_SS
+	bool "QMSI driver for SPI controller on Sensor Subsystem"
+	depends on SPI && QMSI
+	default n
+	help
+	  SPI driver implementation using QMSI library. This instance is
+	  for the Sensor Subsystem.
+
+config SPI_K64
+	bool
+	prompt "Freescale K64-based SPI controller driver"
+	depends on SPI && SOC_MK64F12
+	default n
+	help
+	  Enable support for Freescale K64-based SPI controllers.
+
+config SPI_INTEL
+	bool
+	prompt "Intel SPI controller driver"
+	depends on SPI && CPU_MINUTEIA
+	default n
+	help
+	  Enable support for Intel's SPI controllers. Such controller
+	  was formelly found on XScale chips. It can be found nowadays
+	  on CEXXXX Intel media controller and Quark CPU (2 of them).
+
+
+if SPI
+config SPI_INIT_PRIORITY
+	int "Init priority"
+	default 70
+	help
+	  Device driver initialization priority.
+
+config SYS_LOG_SPI_LEVEL
+	int
+	prompt "SPI Driver Log level"
+	depends on SYS_LOG && SPI
+	default 0
+	range 0 4
+	help
+	  Sets log level for Grove Device Drivers.
+	  Levels are:
+	  0 OFF, do not write
+	  1 ERROR, only write SYS_LOG_ERR
+	  2 WARNING, write SYS_LOG_WRN in adition to previous level
+	  3 INFO, write SYS_LOG_INF in adition to previous levels
+	  4 DEBUG, write SYS_LOG_DBG in adition to previous levels
+
+config SPI_CS_GPIO
+	bool "SPI port CS pin is controlled via a GPIO port"
+	depends on GPIO
+	default n
+
+config	SPI_0
+	bool
+	prompt "SPI port 0"
+	default n
+	help
+	  Enable SPI controller port 0.
+
+config SPI_0_NAME
+	string
+	prompt "SPI port 0 device name"
+	depends on SPI_0
+	default "SPI_0"
+
+config SPI_0_IRQ_PRI
+	int
+	prompt "Port 0 interrupt priority"
+	depends on SPI_0
+
+config SPI_0_CS_GPIO_PORT
+	string
+	prompt "The GPIO port which is used to control CS"
+	depends on SPI_0 && SPI_CS_GPIO
+	default "GPIO_0"
+
+config SPI_0_CS_GPIO_PIN
+	int "The GPIO PIN which is used to act as a CS pin"
+	depends on SPI_0 && SPI_CS_GPIO
+	default 0
+
+config SPI_1
+	bool
+	prompt "SPI port 1"
+	default n
+	help
+	  Enable SPI controller port 1.
+
+config SPI_1_NAME
+	string
+	prompt "SPI port 1 device name"
+	depends on SPI_1
+	default "SPI_1"
+
+config SPI_1_IRQ_PRI
+	int
+	prompt "Port 0 interrupt priority"
+	depends on SPI_1
+
+config SPI_1_CS_GPIO_PORT
+	string
+	prompt "The GPIO port which is used to control CS"
+	depends on SPI_1 && SPI_CS_GPIO
+	default "GPIO_0"
+
+config SPI_1_CS_GPIO_PIN
+	int "The GPIO PIN which is used to act as a CS pin"
+	depends on SPI_1 && SPI_CS_GPIO
+	default 0
+
+config SPI_2
+	bool
+	prompt "SPI port 2"
+	default n
+	help
+	  Enable SPI controller port 2.
+
+config SPI_2_NAME
+	string
+	prompt "SPI port 2 device name"
+	depends on SPI_2
+	default "SPI_2"
+
+config SPI_2_IRQ_PRI
+	int
+	prompt "Port 2 interrupt priority"
+	depends on SPI_2
+
+config SPI_2_CS_GPIO_PORT
+	string
+	prompt "The GPIO port which is used to control CS"
+	depends on SPI_2 && SPI_CS_GPIO
+	default "GPIO_0"
+
+config SPI_2_CS_GPIO_PIN
+	int "The GPIO PIN which is used to act as a CS pin"
+	depends on SPI_2 && SPI_CS_GPIO
+	default 0
+
+source "drivers/spi/Kconfig.dw"
+
+endif # SPI

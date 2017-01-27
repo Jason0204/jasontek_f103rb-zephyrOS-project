@@ -1,0 +1,41 @@
+# Kconfig - Kinetis K6x series configuration options
+
+#
+# Copyright (c) 2014-2016 Wind River Systems, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+if SOC_SERIES_KINETIS_K6X
+
+config SOC_SERIES
+	default k6x
+
+config SRAM_BASE_ADDRESS
+	default 0x20000000
+
+config FLASH_BASE_ADDRESS
+	default 0x00000000
+
+config NUM_IRQ_PRIO_BITS
+	int
+	default 4
+
+config NUM_IRQS
+	int
+	# must be >= the highest interrupt number used
+	default 86
+
+source "arch/arm/soc/nxp_kinetis/k6x/Kconfig.defconfig.mk*"
+
+endif # SOC_SERIES_KINETIS_K6X
