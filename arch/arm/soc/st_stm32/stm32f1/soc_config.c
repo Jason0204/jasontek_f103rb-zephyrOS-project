@@ -57,10 +57,16 @@ static const stm32_pin_func_t pin_pa8_funcs[] = {
 			STM32F10X_PIN_CONFIG_AF_PUSH_PULL,
 };
 
+static const stm32_pin_func_t pin_pa0_funcs[] = {
+	[STM32F1_PINMUX_FUNC_PA0_PWM2_CH1 - 1] =
+			STM32F10X_PIN_CONFIG_AF_PUSH_PULL,
+};
+
 /**
  * @brief pin configuration
  */
 static struct stm32_pinmux_conf pins[] = {
+    STM32_PIN_CONF(STM32_PIN_PA0, pin_pa0_funcs),
 	STM32_PIN_CONF(STM32_PIN_PA2, pin_pa2_funcs),
 	STM32_PIN_CONF(STM32_PIN_PA3, pin_pa3_funcs),
 	STM32_PIN_CONF(STM32_PIN_PA8, pin_pa8_funcs),

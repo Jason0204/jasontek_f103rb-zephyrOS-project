@@ -26,7 +26,7 @@ menuconfig PWM_STM32
 	  MCU.
 
 config PWM_STM32_1
-	bool "STM32 PWM 1 Output"
+	bool "STM32 PWM 1(PA8) Output"
 	depends on PWM_STM32
 	default n
 	help
@@ -41,7 +41,7 @@ config PWM_STM32_1_DEV_NAME
 	  Specify the device name for the PWM driver.
 
 config PWM_STM32_2
-	bool "STM32 PWM 2 Output"
+	bool "STM32 PWM 2(PA0) Output"
 	depends on PWM_STM32
 	default n
 	help

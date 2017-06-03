@@ -13,6 +13,7 @@ cscope.*
 .dir
 outdir
 outdir-*
+samples/jasontek_demos/outdir
 scripts/basic/fixdep
 scripts/gen_idt/gen_idt
 scripts/gen_offset_header/gen_offset_header

@@ -144,8 +144,11 @@ static uint8_t (*completion_cb)(char *line, uint8_t len);
 
 /* Control characters */
 #define ESC                0x1b
-#define DEL                0x7f
-
+#if CONFIG_JASONTEK_SHELLDEMO
+#define DEL                0x08   /* backspace KEY */
+#else
+#define DEL                0x7f   /* ctrl+backspace KEY */
+#endif
 /* ANSI escape sequences */
 #define ANSI_ESC           '['
 #define ANSI_UP            'A'

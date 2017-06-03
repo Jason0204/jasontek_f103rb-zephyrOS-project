@@ -25,8 +25,14 @@
 #include <device.h>
 #include <pwm.h>
 
-#define PWM_DRIVER "PWM_1"
-#define PWM_CHANNEL 1
+#ifdef CONFIG_PWM_STM32_1
+#define PWM_DRIVER     "PWM_1"
+#define PWM_CHANNEL      1
+#endif
+#ifdef CONFIG_PWM_STM32_2
+#define PWM_DRIVER     "PWM_2"
+#define PWM_CHANNEL      1
+#endif
 
 /*
  * 50 is flicker fusion threshold. Modulated light will be perceived
@@ -44,6 +50,8 @@ void fadedemo_main(void)
 	uint8_t dir = 0;
 
 	printk("PWM demo app-fade LED\n");
+	printk("PWM driver: "); printk("%s\n",PWM_DRIVER);
+	printk("PWM channel: ");printk("%d\n",PWM_CHANNEL);
 
 	pwm_dev = device_get_binding(PWM_DRIVER);
 	if (!pwm_dev) {
@@ -52,9 +60,11 @@ void fadedemo_main(void)
 	}
 
 	while (1) {
-		if (pwm_pin_set_usec(pwm_dev, PWM_CHANNEL,
-					PERIOD, pulse_width)) {
-			printk("pwm pin set fails\n");
+		if (pwm_pin_set_usec(pwm_dev, PWM_CHANNEL,PERIOD, pulse_width)) {
+			
+			printk("pwm pin set fails--error code:%d\n", 
+				pwm_pin_set_usec(pwm_dev, PWM_CHANNEL,PERIOD, pulse_width) );
+			
 			return;
 		}
 		

@@ -19,7 +19,7 @@
 
 #if CONFIG_JASONTEK_SYNCDEMO
 	#include "syncdemo.h"
-	K_THREAD_DEFINE(threadA_id, STACKSIZE, threadA, NULL, NULL, NULL,	PRIORITY, 0, K_NO_WAIT);
+        K_THREAD_DEFINE(threadA_id, STACKSIZE, threadA, NULL, NULL, NULL,	PRIORITY, 0, K_NO_WAIT);
 #else
 	#if CONFIG_JASONTEK_SHELLDEMO
 		#include "shelldemo.h"
